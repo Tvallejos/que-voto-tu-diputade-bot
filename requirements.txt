@@ -1,0 +1,3 @@
+python-telegram-bot
+python-dotenv
+-r ./src/scrap_diputades/requirements.txt

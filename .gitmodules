@@ -1,0 +1,3 @@
+[submodule "src/scrap_diputades"]
+	path = src/scrap_diputades
+	url = https://github.com/Tvallejos/scrap-diputades
