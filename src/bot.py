@@ -14,13 +14,17 @@ def bulid_vote_msg(vote):
     return str(vote)
 
 async def start(update: Update, context: CallbackContext.DEFAULT_TYPE):
+    logging.info(f'/start from: {update.effective_chat.id}')
     await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
 
 async def voto(update: Update, context: CallbackContext.DEFAULT_TYPE):
+    logging.info(f'/vote from: {update.effective_chat.id}')
     name = update.message.text.split(' ')[1]
+    logging.info(f'/vote expecting: {name}, scrapping votos')
     await context.bot.send_message(chat_id=update.effective_chat.id, text=f'paciencia, {name}')
     votos = get_votaciones_by_name(name)
+    logging.info(f'/vote votos: {votos}')
     await context.bot.send_message(chat_id=update.effective_chat.id, text=votos)
     return
 
