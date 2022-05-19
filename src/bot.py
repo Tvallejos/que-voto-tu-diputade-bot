@@ -4,7 +4,7 @@ from telegram.ext import ApplicationBuilder, CallbackContext, CommandHandler
 import sys
 sys.path.append("./src/scrap_diputades")
 from scrap_diputades.full_scrapper import get_votaciones_by_name
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
@@ -25,7 +25,8 @@ async def voto(update: Update, context: CallbackContext.DEFAULT_TYPE):
     return
 
 if __name__ == '__main__':
-    application = ApplicationBuilder().token('TODODOTENV').build()
+    config = dotenv_values(".env") 
+    application = ApplicationBuilder().token(config['TOKEN']).build()
     
     start_handler = CommandHandler('start', start)
     voto = CommandHandler('voto', voto)
