@@ -8,6 +8,7 @@ on:
     branches: 
       - 'main'
       - 'ci'
+      - 'cd'
   pull_request:
     branches: [ main ]
 
@@ -49,6 +50,8 @@ jobs:
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       if: github.ref == 'refs/heads/main' && job.status == 'success'
       run: |
+        pip install "python-dotenv[cli]"
+        dotenv set TOKEN ${{ secrets.TOKEN }}
         git remote add heroku https://heroku:$HEROKU_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git
         git push heroku HEAD:main -f
          
