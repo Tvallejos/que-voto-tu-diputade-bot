@@ -44,7 +44,7 @@ jobs:
       run: |
         pip install pytest
         pytest
-  deploy: ## <-- this is the new stuff
+  deploy: 
     needs: build
     runs-on: ubuntu-latest
     steps:
