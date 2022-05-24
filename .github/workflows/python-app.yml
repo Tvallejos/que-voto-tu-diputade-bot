@@ -52,6 +52,7 @@ jobs:
       run: |
         pip install "python-dotenv[cli]"
         dotenv set TOKEN ${{ secrets.TOKEN }}
-        git remote add heroku https://heroku:$HEROKU_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git
+        git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+        curl -X POST https://api.heroku.com/apps -H "Accept: application/vnd.heroku+json; version=3" -H "Authorization: Bearer $HEROKU_API_KEY"
         git push heroku HEAD:main -f
          
