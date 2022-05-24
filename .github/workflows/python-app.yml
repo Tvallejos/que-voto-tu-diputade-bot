@@ -44,15 +44,25 @@ jobs:
       run: |
         pip install pytest
         pytest
-    - name: Deploy Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-      if: github.ref == 'refs/heads/main' && job.status == 'success'
-      run: |
-        pip install "python-dotenv[cli]"
-        dotenv set TOKEN ${{ secrets.TOKEN }}
-        git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
-        curl -X POST https://api.heroku.com/apps -H "Accept: application/vnd.heroku+json; version=3" -H "Authorization: Bearer $HEROKU_API_KEY"
-        git push heroku HEAD:main -f
-         
+  #  - name: Deploy Heroku
+  #    env:
+  #      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  #      HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+  #    if: github.ref == 'refs/heads/main' && job.status == 'success'
+  #    run: |
+  #      pip install "python-dotenv[cli]"
+  #      dotenv set TOKEN ${{ secrets.TOKEN }}
+  #      git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+  #      curl -X POST https://api.heroku.com/apps -H "Accept: application/vnd.heroku+json; version=3" -H "Authorization: Bearer $HEROKU_API_KEY"
+  #      git push heroku HEAD:main -f
+ deploy: ## <-- this is the new stuff
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+        heroku_email: ${{secrets.HEROKU_EMAIL}}
+        remote_branch: main         
