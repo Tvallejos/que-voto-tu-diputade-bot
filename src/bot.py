@@ -49,6 +49,7 @@ if __name__ == '__main__':
     voto = CommandHandler('voto', voto)
     application.add_handler(start_handler)
     application.add_handler(voto)
+    application.run_polling()
     application.run_webhook(
         listen="0.0.0.0",
         port=int(config['PORT']),
@@ -65,4 +66,4 @@ if __name__ == '__main__':
     #                   url_path=telegram_bot_token,
     #                   webhook_url=  + telegram_bot_token
     #                   )
-    # application.run_polling()
+    # 
