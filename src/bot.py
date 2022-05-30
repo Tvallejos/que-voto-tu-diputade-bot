@@ -6,6 +6,8 @@ import sys
 from dotenv import dotenv_values
 sys.path.append("./src/scrap_diputades/src")
 from full_scrapper import get_votaciones_by_name
+import exceptions as e
+
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -31,7 +33,11 @@ async def voto(update: Update, context: CallbackContext.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=f'paciencia, {name}')
-    votos = get_votaciones_by_name(name)
+    try:
+        votos = get_votaciones_by_name(name)
+    except (e.DiputadeNotFound, e.MultiplesDiputadesFound) as exp:
+        votos = exp.message
+
     logging.info(f'/vote votos: {votos}')
     await context.bot.send_message(
         chat_id=update.effective_chat.id, text=votos)
