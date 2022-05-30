@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # add handlers
     application.run_webhook(
         listen="0.0.0.0",
-        port=int(config(PORT)),
+        port=int(config['PORT']),
         url_path=config['TOKEN'],
         webhook_url=f"https://{config['HEROKU_APP_NAME']}.herokuapp.com/{config['TOKEN']}" 
     )
