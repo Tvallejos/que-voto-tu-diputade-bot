@@ -10,6 +10,8 @@ import exceptions as e
 
 
 logging.basicConfig(
+    filename='diputade.log',
+    filemode='a',
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
