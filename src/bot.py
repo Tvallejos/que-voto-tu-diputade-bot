@@ -41,25 +41,22 @@ if __name__ == '__main__':
     config = dotenv_values(".env")
     if not config:
         config['TOKEN'] = os.getenv('TOKEN')
-        config['PORT'] = os.getenv('PORT')
         config['HEROKU_APP_NAME'] = os.getenv('HEROKU_APP_NAME')
+        config['PORT'] = os.getenv('PORT', default='8443')
 
     application = ApplicationBuilder().token(config['TOKEN']).build()
     start_handler = CommandHandler('start', start)
     voto = CommandHandler('voto', voto)
     application.add_handler(start_handler)
     application.add_handler(voto)
-    # application.run_webhook(listen="0.0.0.0",
-    #                   port=int(os.environ.get('PORT', 5000)),
-    #                   url_path=config['TOKEN'],
-    #                   webhook_url=  + config['TOKEN']
+    application.run_webhook(
+        listen="0.0.0.0",
+        port=int(config['PORT']),
+        url_path=config['TOKEN'],
+        webhook_url=f"https://{config['HEROKU_APP_NAME']}.herokuapp.com/"
+                    + config['TOKEN']
+        )
 
-    # add handlers
-    # application.run_webhook(
-    #    listen="0.0.0.0",
-    #    port=int(config['PORT']),
-    #    url_path=config['TOKEN'],
-    #    webhook_url=f"https://{config['HEROKU_APP_NAME']}.herokuapp.com/{config['TOKEN']}"
     # )
     # )
     # updater.start_webhook(
@@ -68,4 +65,4 @@ if __name__ == '__main__':
     #                   url_path=telegram_bot_token,
     #                   webhook_url=  + telegram_bot_token
     #                   )
-    application.run_polling()
+    # application.run_polling()
