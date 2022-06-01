@@ -20,7 +20,7 @@ async def start(update: Update, context: CallbackContext.DEFAULT_TYPE):
 
 
 async def voto(update: Update, context: CallbackContext.DEFAULT_TYPE):
-    logging.info(f'call from: {update.effective_chat.id}')
+    logging.info(f'voto call from: {update.effective_chat.id}')
     msg = update.message.text.split(' ')
     msg = list(filter(lambda m: not (not m), msg))
     name = msg[1]

@@ -3,10 +3,12 @@ from telegram.ext import ApplicationBuilder
 from settings import set_config, add_handlers, declare_handlers
 
 logging.basicConfig(
-    filename='diputade.log',
-    filemode='a',
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
+    level=logging.INFO,
+    handlers=[
+        logging.FileHandler("diputade.log", mode='a'),
+        logging.StreamHandler()
+    ]
 )
 
 if __name__ == '__main__':
