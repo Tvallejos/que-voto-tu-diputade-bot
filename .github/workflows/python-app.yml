@@ -43,7 +43,7 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest
+        pytest --ignore=src/scrap_diputades
   deploy: 
     needs: build
     runs-on: ubuntu-latest

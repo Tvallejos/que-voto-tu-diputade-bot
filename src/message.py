@@ -2,8 +2,10 @@ from typing import Dict
 import logging
 
 
-def bold(msg : str):
+def bold(msg: str):
     return f'<b>{msg}</b>'
+
+
 def string_of_vote(v: Dict, info: bool):
     extra = ""
     if info:
