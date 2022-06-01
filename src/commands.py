@@ -21,14 +21,19 @@ async def start(update: Update, context: CallbackContext.DEFAULT_TYPE):
 
 async def voto(update: Update, context: CallbackContext.DEFAULT_TYPE):
     logging.info(f'call from: {update.effective_chat.id}')
-    name = update.message.text.split(' ')[1]
+    msg = update.message.text.split(' ')
+    msg = list(filter(lambda m: not (not m), msg))
+    name = msg[1]
+    if len(msg) > 2:
+        name += f' {msg[2]}'
+
     logging.info(f'/vote expecting: {name}, scrapping votos')
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=f'paciencia, {name}')
     try:
         votos = string_of_vote(get_votaciones_by_name(name), False)
-    except (e.DiputadeNotFound, e.MultiplesDiputadesFound) as exp:
+    except (e.DiputadeNotFound, e.MultiplesDiputadesFound, e.VotacionesNotFound) as exp:
         votos = exp.message
 
     logging.info(f'/vote votos: {votos}')
